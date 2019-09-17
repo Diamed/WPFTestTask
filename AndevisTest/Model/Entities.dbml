@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AndevisTestTask" Class="EntitiesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="Employee.Keeled" Member="Keeleds">
+    <Type Name="Keeled">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Keel" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="Keeled_PersonalKeeled" Member="PersonalKeeleds" ThisKey="Id" OtherKey="idKeeled" Type="PersonalKeeled" />
+    </Type>
+  </Table>
+  <Table Name="Employee.KeeleTasud" Member="KeeleTasuds">
+    <Type Name="KeeleTasud">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idTase" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Summa" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Association Name="Tase_KeeleTasud" Member="Tase" ThisKey="idTase" OtherKey="Id" Type="Tase" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Employee.Personal" Member="Personals">
+    <Type Name="Personal">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Perekonnanimi" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Eesnimi" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="idSugu" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Sunnipaev" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Palk" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="idTimeUnit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Personal_PersonalKeeled" Member="PersonalKeeleds" ThisKey="Id" OtherKey="idPersonal" Type="PersonalKeeled" />
+      <Association Name="Personal_Tooaeg" Member="Tooaegs" ThisKey="Id" OtherKey="idPersonal" Type="Tooaeg" />
+      <Association Name="Sugu_Personal" Member="Sugu" ThisKey="idSugu" OtherKey="Id" Type="Sugu" IsForeignKey="true" />
+      <Association Name="TimeUnit_Personal" Member="TimeUnit" ThisKey="idTimeUnit" OtherKey="Id" Type="TimeUnit" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Employee.PersonalKeeled" Member="PersonalKeeleds">
+    <Type Name="PersonalKeeled">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idPersonal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idKeeled" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idTase" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Keeled_PersonalKeeled" Member="Keeled" ThisKey="idKeeled" OtherKey="Id" Type="Keeled" IsForeignKey="true" />
+      <Association Name="Personal_PersonalKeeled" Member="Personal" ThisKey="idPersonal" OtherKey="Id" Type="Personal" IsForeignKey="true" />
+      <Association Name="Tase_PersonalKeeled" Member="Tase" ThisKey="idTase" OtherKey="Id" Type="Tase" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Employee.Sugu" Member="Sugus">
+    <Type Name="Sugu">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Sugu_Personal" Member="Personals" ThisKey="Id" OtherKey="idSugu" Type="Personal" />
+    </Type>
+  </Table>
+  <Table Name="Employee.Tase" Member="Tases">
+    <Type Name="Tase">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Tase_KeeleTasud" Member="KeeleTasuds" ThisKey="Id" OtherKey="idTase" Type="KeeleTasud" />
+      <Association Name="Tase_PersonalKeeled" Member="PersonalKeeleds" ThisKey="Id" OtherKey="idTase" Type="PersonalKeeled" />
+    </Type>
+  </Table>
+  <Table Name="Employee.TimeUnit" Member="TimeUnits">
+    <Type Name="TimeUnit">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TimeUnit_Personal" Member="Personals" ThisKey="Id" OtherKey="idTimeUnit" Type="Personal" />
+    </Type>
+  </Table>
+  <Table Name="Employee.Tooaeg" Member="Tooaegs">
+    <Type Name="Tooaeg">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idPersonal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Kuupaev" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Tootunnid" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Association Name="Personal_Tooaeg" Member="Personal" ThisKey="idPersonal" OtherKey="Id" Type="Personal" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="Employee.GetEmployeesInfo" Method="GetEmployeesInfo">
+    <Parameter Name="Keel" Parameter="keel" Type="System.String" DbType="NVarChar(100)" />
+    <Parameter Name="Tase" Parameter="tase" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="VanusAlates" Parameter="vanusAlates" Type="System.Int32" DbType="Int" />
+    <Parameter Name="VanusKuni" Parameter="vanusKuni" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Sugu" Parameter="sugu" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="GetEmployeesInfoResult">
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(513) NOT NULL" CanBeNull="false" />
+      <Column Name="Sugu" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Sunnipaev" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Vanus" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Keel" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Tase" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Summa" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Employee.GetSalariesInfo" Method="GetSalariesInfo">
+    <Parameter Name="Kuu" Parameter="kuu" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Aasta" Parameter="aasta" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idPersonal" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetSalariesInfoResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(513) NOT NULL" CanBeNull="false" />
+      <Column Name="Palk" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Tootunnid" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="CalculatedSalary" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

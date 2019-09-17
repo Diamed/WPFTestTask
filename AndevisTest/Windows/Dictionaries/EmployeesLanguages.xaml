@@ -1,0 +1,118 @@
+﻿<Window x:Class="AndevisTest.Windows.Dictionaries.EmployeesLanguages"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AndevisTest.Windows.Dictionaries"
+        mc:Ignorable="d"
+        Title="Справочник уровней владения сотрудников языками" Height="450" Width="840" MinWidth="840" MinHeight="450">
+    <Grid>
+        <DataGrid ItemsSource="{Binding EmployeesLanguages}" AutoGenerateColumns="False" MinRowHeight="35">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" IsReadOnly="True" Width="0.1*" MinWidth="35"/>
+                <DataGridTemplateColumn Header="Сотрудник" Width="*" MinWidth="250">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.Employees, RelativeSource={RelativeSource AncestorType=local:EmployeesLanguages}}"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding idPersonal, UpdateSourceTrigger=LostFocus}"
+                                      IsHitTestVisible="False">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label>
+                                            <Label.Content>
+                                                <TextBlock>
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0} {1} {2:dd.MM.yyyy}">
+                                                            <Binding Path="Perekonnanimi"/>
+                                                            <Binding Path="Eesnimi"/>
+                                                            <Binding Path="Sunnipaev"/>
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </Label.Content>
+                                        </Label>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.Employees, RelativeSource={RelativeSource AncestorType=local:EmployeesLanguages}}"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding idPersonal, UpdateSourceTrigger=LostFocus}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label>
+                                            <Label.Content>
+                                                <TextBlock>
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0} {1} {2:dd.MM.yyyy}">
+                                                            <Binding Path="Perekonnanimi"/>
+                                                            <Binding Path="Eesnimi"/>
+                                                            <Binding Path="Sunnipaev"/>
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </Label.Content>
+                                        </Label>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Язык" MinWidth="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.Languages, RelativeSource={RelativeSource AncestorType=local:EmployeesLanguages}}"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding idKeeled, UpdateSourceTrigger=LostFocus}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Keel}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Уровень владения" MinWidth="115">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding DataContext.LanguageLevels, RelativeSource={RelativeSource AncestorType=local:EmployeesLanguages}}"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding idTase, UpdateSourceTrigger=LostFocus}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Title}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="0.5*" MinWidth="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Сохранить" 
+                                    Command="{Binding DataContext.SaveRowCommand, RelativeSource={RelativeSource AncestorType=local:EmployeesLanguages}}" 
+                                    CommandParameter="{Binding}"
+                                    />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="0.5*" MinWidth="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Удалить" 
+                                    Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=local:EmployeesLanguages}}" 
+                                    CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
